@@ -1,0 +1,14 @@
+{
+  "name": "hr",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "echo \"Run the correct js file to start your application\" && exit 0",
+    "populate": "node ./bin/populate_db"
+  },
+  "dependencies": {
+    "async": "0.9.0",
+    "debug": "0.7.4",
+    "express": "4.2.0",
+    "mongoose": "3.8.11"
+  }
+}

@@ -1,0 +1,43 @@
+<html lang="en" ng-app="app">
+  <body ng-controller="main">
+    <input type="text" ng-model="firstName" placeholder="first name">
+    <input type="text" ng-model="lastName" placeholder="first name">
+    <button ng-disabled="!(firstName.length && lastName.length)" ng-click="add()">Add</button>
+    <table>
+      <tr ng-repeat="p in presidents">
+        <td>{{p.first}}</td>
+        <td>{{p.last}}</td>
+        <td><button ng-click="$parent.remove(p)">Remove</button></td>
+      </tr>
+    </table>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script>
+        var app = angular.module('app', []);
+        app.controller('main', ['$scope', function($scope) {
+          $scope.presidents = [{
+            first: 'Abraham',
+            last: 'Lincoln'
+          }, {
+            first: 'Andrew',
+            last: 'Johnson'
+          }, {
+            first: 'Ulysses',
+            last: 'Grant'
+          }];
+
+          $scope.add = function () {
+            $scope.presidents.push({
+              first: $scope.firstName,
+              last: $scope.lastName
+            });
+
+            $scope.firstName = $scope.lastName = '';
+          };
+
+          $scope.remove = function(president) {
+            $scope.presidents.splice($scope.presidents.indexOf(president), 1 );
+          }
+        }]);
+    </script>
+  </body>
+</html>

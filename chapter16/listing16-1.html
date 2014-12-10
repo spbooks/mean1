@@ -1,0 +1,13 @@
+<html lang="en" ng-app>
+  <body>
+    <input type="text" ng-model="firstName" placeholder="first name">
+    <input type="text" ng-model="lastName" placeholder="last name">
+    <h2>Gender {{gender}}</h2>
+    <input type="radio" ng-model="gender" value="male" ng-click="style={color:'yellow'}">Male
+    <input type="radio" ng-model="gender" value="female" ng-click="style={color:'orange'}">Female
+    <br />
+    <h2 ng-style=style>Welcome {{firstName + ' ' + lastName}}</h2>
+    <button ng-disabled="!(firstName.length && lastName.length)" ng-click="signup()">Sign Up</button>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+  </body>
+</html>

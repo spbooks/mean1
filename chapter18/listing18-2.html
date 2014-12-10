@@ -1,0 +1,60 @@
+<html lang="en" ng-app="app">
+  <body>
+    <div ng-controller="main">
+      <input type="text" ng-model="firstName" placeholder="first name">
+      <input type="text" ng-model="lastName" placeholder="first name">
+      <button ng-disabled="!(firstName.length && lastName.length)" ng-click="add()">Add</button>
+      <table>
+        <tr ng-repeat="p in employees">
+          <td>{{p.id}}</td>
+          <td><span>{{p.first}} {{p.last}}</span></td>
+          <td><button ng-click="$parent.remove(p)">Remove</button></td>
+        </tr>
+      </table>
+    </div>
+    <div ng-controller="logger">
+      <pre>
+        <p ng-repeat="e in events track by $index">{{$index}} - {{e}}</p>
+      </pre>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script>
+        var app = angular.module('app', []);
+
+        app.controller('main', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+          $scope.employees = [];
+          $scope.firstName = $scope.lastName = '';
+
+          $http.get('/employees').success(function(data) {
+            $scope.employees = data;
+            $rootScope.$emit('log', 'GET /employees success');
+          });
+
+          $scope.add = function () {
+            $http.post('/employees', {
+              first: $scope.firstName,
+              last: $scope.lastName
+            }).success(function(data) {
+              $scope.employees.push(data);
+              $scope.firstName = $scope.lastName = '';
+              $rootScope.$emit('log', 'POST /employees success');
+            });
+          };
+
+          $scope.remove = function(employee) {
+            $http.delete('/employees/' + employee.id).success(function(data) {
+              $scope.employees = data;
+              $rootScope.$emit('log', 'DELETE /employees success');
+            });
+          }
+        }]);
+        app.controller('logger', ['$scope', '$rootScope', function ($scope, $rootScope) {
+          $scope.events = [];
+
+          $rootScope.$on('log', function (event, data) {
+            $scope.events.push(data.trim());
+          });
+        }]);
+    </script>
+  </body>
+</html>
