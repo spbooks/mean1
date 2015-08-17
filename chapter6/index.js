@@ -50,8 +50,7 @@ http.createServer(function (req, res) {
   }
   else {
     // try to send the static file
-    res.writeHead(200);
-    res.end('static file maybe');
+    staticFile(req.url, res);
   }
 }).listen(1337, '127.0.0.1');
 
