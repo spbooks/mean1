@@ -25,6 +25,10 @@
           get: {
             isArray: true
           },
+          delete:
+            isArray: true,
+            methode: 'DELETE'
+          },
           post: {
             method: 'POST',
             isArray: false
@@ -54,11 +58,12 @@
           });
         };
         $scope.remove = function(employee) {
-          $http.delete('/employees/' + employee.id).success(function(data) {
+          EmployeeService.delete({
+            employeeId: employee.id
+          }, function (data) {
             $scope.employees = data;
-            $rootScope.$emit('log', 'DELETE /employees success');
-          });
-        }
+          })
+        };
       }]);
 
       app.controller('logger', ['$scope', '$rootScope', function ($scope, $rootScope) {
