@@ -139,7 +139,8 @@ var addTeams = function(callback) {
     if (error) {
         console.error('Error: ' + error);
     } else {
-        data.team_id = team1._id;
+        // data.team_id = team1._id;
+        data.team_id = team1[0]._id
     }
 
     console.info('Done adding teams');
@@ -148,7 +149,6 @@ var addTeams = function(callback) {
 };
 var updateEmployeeTeams = function (callback) {
   console.info('Updating employee teams');
-  var team = data.teams[0];
 
   // Set everyone to be on the same team to start
   Employee.update({}, {
